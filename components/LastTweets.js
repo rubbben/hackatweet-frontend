@@ -16,15 +16,16 @@ function LastTweets() {
             .then((response) => response.json())
             .then((data) => {
                 console.log(
-                    "from LastTweets - inside useEffect - data =>",
-                    data
+                    "from LastTweets - inside useEffect - data[0].userId.firstname =>",
+                    data[0].userId.firstname
                 );
                 let tweets = data.map((tw, i) => (
                     <Tweet
                         key={i}
                         like={tw.like}
                         date={tw.date}
-                        user={tw.userId}
+                        firstname={tw.userId.firstname}
+                        username={tw.userId.username}
                         text={tw.text}
                     />
                 ));

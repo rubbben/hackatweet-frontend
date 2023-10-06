@@ -3,13 +3,21 @@ import { Image } from 'antd';
 import { HeartFilled, DeleteFilled } from '@ant-design/icons';
 
 function Tweet(props) {
+
+    // Manipulation des dates - A revori pour avoir exactement ce que l'on veut
+    // let date = new Date(props.date).toISOString()
+    let date = new Date(props.date)
+    date = Date.now() - date
+    date = new Date(date).toISOString().slice(11, 19)
+
+
     return (
         <div>
             <main className={styles.main}>
                 <div className={styles.headerTweet}>
                     <Image width={50} height={50} src="/avatar.jpg" style={{borderRadius: '50%'}} />
                     <div className={styles.containerHeaderUserTweet}>
-                        <div style={{fontWeight: 'bold'}}>Antoine</div> <span className={styles.colorUsernameDate}>@Ant · {props.date}</span>
+                        <div style={{fontWeight: 'bold'}}>{props.firstname}</div> <span className={styles.colorUsernameDate}>@{props.username} · il y a {date}</span>
                     </div>
                 </div>
 
