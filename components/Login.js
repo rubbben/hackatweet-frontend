@@ -7,17 +7,32 @@ function Login() {
   const [modal01pen, setModal01pen] = useState(false);
   const [modal02pen, setModal02pen] = useState(false);
 
+  const [signUpFirstname, setSignUpFirstname] = useState('');
+  const [signUpUsername, setSignUpUsername] = useState('');
+  const [signUpPassword, setSignUpPassword] = useState('');
+
+  const [signInFirstname, setSignInFirstname] = useState('');
+  const [signInUsername, setSignInUsername] = useState('');
+
+
+  const urlBack = 'https://hackatweet-backend-eta.vercel.app'
+
   let modalContentSignup = (
     <>
         <Input 
             placeholder="Firstname"
             prefix={<UserOutlined className="site-form-item-icon" />}
+            onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname}
         />
         <Input
             placeholder="Username"
             prefix={<UserOutlined className="site-form-item-icon" />}
+            onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername}
         />
-        <Input.Password placeholder="Password" />
+        <Input.Password 
+            placeholder="Password" 
+            onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword}
+        />
     </>
   );
 
@@ -26,13 +41,33 @@ function Login() {
         <Input 
             placeholder="Firstname"
             prefix={<UserOutlined className="site-form-item-icon" />}
+            onChange={(e) => setSignInFirstname(e.target.value)} value={setSignInFirstname}
         />
         <Input
             placeholder="Username"
             prefix={<UserOutlined className="site-form-item-icon" />}
+            onChange={(e) => setSignInUsername(e.target.value)} value={setSignInUsername}
         />
     </>
   );
+
+
+  const handleRegister = () => {
+    fetch(`${urlBack}/users/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword }),
+    }).then(response => response.json())
+        .then(data => {
+            if (data) {
+                console.log(data)
+                // dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token }));
+                setSignUpFirstname('');
+                setSignUpUsername('');
+                setSignUpPassword('');
+            }
+        });
+  };
 
   return (
     <div>
@@ -48,7 +83,7 @@ function Login() {
             title="Create your Hackatweet account"
             centered
             open={modal01pen}
-            onOk={() => setModal01pen(false)}
+            onOk={() => handleRegister()}
             onCancel={() => setModal01pen(false)}
         >
             {modalContentSignup}
