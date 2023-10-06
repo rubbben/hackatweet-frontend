@@ -1,9 +1,17 @@
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Modal, Input } from 'antd';
+import { useRouter } from 'next/router';
+
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../reducers/user'
 
 function Login() {
+  const urlBack = 'https://hackatweet-backend-eta.vercel.app'
+  const router = useRouter();
+  
+  
   const [modal01pen, setModal01pen] = useState(false);
   const [modal02pen, setModal02pen] = useState(false);
 
@@ -11,11 +19,14 @@ function Login() {
   const [signUpUsername, setSignUpUsername] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
 
-  const [signInFirstname, setSignInFirstname] = useState('');
   const [signInUsername, setSignInUsername] = useState('');
+  const [signInPassword, setSignInPassword] = useState('');
 
+  
+//   console.log(useSelector(state => state.user.value ))
 
-  const urlBack = 'https://hackatweet-backend-eta.vercel.app'
+  const dispatch = useDispatch();
+  
 
   let modalContentSignup = (
     <>
@@ -38,15 +49,15 @@ function Login() {
 
   let modalContentSignin = (
     <>
-        <Input 
-            placeholder="Firstname"
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            onChange={(e) => setSignInFirstname(e.target.value)} value={setSignInFirstname}
-        />
         <Input
             placeholder="Username"
             prefix={<UserOutlined className="site-form-item-icon" />}
-            onChange={(e) => setSignInUsername(e.target.value)} value={setSignInUsername}
+            onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername}
+        />
+        <Input.Password
+            placeholder="Password"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}
         />
     </>
   );
@@ -59,12 +70,30 @@ function Login() {
         body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword }),
     }).then(response => response.json())
         .then(data => {
-            if (data) {
+            if (data.result) {
                 console.log(data)
-                // dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token }));
+                dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, userId: data._id }));
                 setSignUpFirstname('');
                 setSignUpUsername('');
                 setSignUpPassword('');
+                router.push('/home');
+            }
+        });
+  };
+
+  const handleConnection = () => {
+    fetch(`${urlBack}/users/signin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: signInUsername, password: signInPassword }),
+    }).then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                console.log(data)
+                dispatch(login({ username: signInUsername, token: data.token, userId: data._id }));
+                setSignInUsername('');
+                setSignInPassword('');
+                router.push('/home');
             }
         });
   };
@@ -96,7 +125,7 @@ function Login() {
             title="Connect to Hackatweet"
             centered
             open={modal02pen}
-            onOk={() => setModal02pen(false)}
+            onOk={() => handleConnection()}
             onCancel={() => setModal02pen(false)}
         >
             {modalContentSignin}
