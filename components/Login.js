@@ -102,7 +102,7 @@ function Login() {
     <div>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to Hackatweet
         </h1>
 
         <Button type="primary" onClick={() => setModal01pen(true)}>
