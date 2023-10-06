@@ -2,9 +2,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 4rem 0;
+    margin: 4rem 0;
+    border: 1px solid #2A313C;
+    padding: 2rem;
+    color: #fff;
 }
 
 .title {
@@ -12,6 +13,30 @@
     font-size: 4rem;
 }
 
-.avatar {
-    border-radius: 50%;
+.headerTweet {
+    display: flex;
+    align-items: center;
+} 
+
+.containerHeaderUserTweet {
+    display: flex;
+    margin-left: 10px;
+}
+
+.colorUsernameDate {
+    color: #697586;
+    margin-left: 4px;
+}
+
+.hashtag {
+    color: #126FDB;
+}
+
+.hashtag {
+    color: #126FDB;
+    text-decoration: none;
+}
+
+.hashtag:hover, .hashtag:focus, .hashtag:active {
+    text-decoration: underline;
 }

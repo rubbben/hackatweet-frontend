@@ -7,8 +7,8 @@ function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">HOME</a>
-          <Tweet />
         </h1>
+        <Tweet />
       </main>
     </div>
   );
