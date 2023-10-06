@@ -24,7 +24,7 @@ function LastTweets() {
                         key={i}
                         like={tw.like}
                         date={tw.date}
-                        userId={tw.userId}
+                        user={tw.userId}
                         text={tw.text}
                     />
                 ));
