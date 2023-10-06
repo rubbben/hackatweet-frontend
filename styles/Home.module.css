@@ -20,3 +20,7 @@
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
 }
+
+.textarea {
+  border: none; border-bottom: 1px solid #697586; border-radius: 0; background: #161D28; outline: 'none'
+}
